@@ -64,10 +64,10 @@ const unsigned char hexfile[] = {
 // delay_1us() 1us delays
 
 // bit delays for various type of communication parts (for keys, addresses, codes and datas)
-#define ICP_100B_DELAY 31000 // 100 baud bit delay
-#define ICP_8K3HB_DELAY 184 // 8300 baud half bit delay
-#define ICP_115KHB_DELAY 10 // 115200 baud half bit delay
-#define ICP_387KHB_DELAY 2 // 387500 baud half bit delay
+#define ICP_100B_DELAY 50000 // 100 baud bit delay
+#define ICP_8K3HB_DELAY 300 // 8300 baud half bit delay
+#define ICP_115KHB_DELAY 20 // 115200 baud half bit delay
+#define ICP_387KHB_DELAY 5 // 387500 baud half bit delay
 
 void ICP_key(void) // send key sequence to start ICP function in chip
 {
