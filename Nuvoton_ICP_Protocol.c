@@ -12,8 +12,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// A reverse engineered gift from me (: have fun!!!
-
 // Nuvoton MS51FB9AE Blink LED example (This example hex file blinks the LED that connected to P1.2 pin)
 const unsigned char hexfile[] = {
 0x10,0x00,0x00,0x00,0x02,0x00,0x6E,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x02,0x00,0x0E,0xC0,0xE0,0xD8,
