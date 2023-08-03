@@ -63,6 +63,8 @@ const unsigned char hexfile[] = {
 // delay_200ns() 200ns delays
 // delay_1us() 1us delays
 
+#define MCU_DEVICE_ID 0xDA21
+
 // bit delays for various type of communication parts (for keys, addresses, codes and datas)
 #define ICP_100B_DELAY 50000 // 100 baud bit delay
 #define ICP_8K3HB_DELAY 300 // 8300 baud half bit delay
