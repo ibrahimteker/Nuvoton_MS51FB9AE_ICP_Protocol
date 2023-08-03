@@ -53,6 +53,7 @@ const unsigned char hexfile[] = {
 // ICSPFlags this structure use to show programming stage 
 // ICP_BUFFER_DIR. this definition use to change ICP external logic buffer IC data flow direction (you may not use this chip and pin)
 // ICP_DATA_DR. this definition use to change ICP data direction for the application enviroment itself. (E.g. STM32, Atmega, dsPIC pin direction) you may need to add more than one line for some platforms!
+// ICP_DATA_WR this definition use to write serial data to pin
 // ICP_CLK. this pin ICP clock output pin. This pin must be output for the application. 
 // ICP_RST_HGH setting ICP reset pin to high level RESET pin is also an output
 // ICP_RST_LOW setting ICP reset pin to low level
@@ -223,7 +224,7 @@ void ICP_Programming_Algorithm(void) // The main protocol function.
     ICP_RST_ICP;
     ICP_RST_HGH;
 
-    GLOBAL_INTERRUPT = 0;  // global interrupts enable 
+    GLOBAL_INTERRUPT = 0;  // global interrupts disable
     
 	// Reading device ID first!
     TargetID_ReadTry = 0; // Try to read ID twice to break if there is a code protection
@@ -251,7 +252,7 @@ void ICP_Programming_Algorithm(void) // The main protocol function.
     
     ICP_Erase_Memory:
     delay_1us(1000000);
-    GLOBAL_INTERRUPT = 0;  // global interrupts enable
+    GLOBAL_INTERRUPT = 0;  // global interrupts disable
     if((ICSPFlags.bits.DevID_OK && ICSPFlags.bits.RevID_OK) || ( ( (Target_DevID!=MCU_DEVICE_ID) || (Target_RevID!=0x4B) ) && (TargetID_ReadTry==0) ) )
     {
         // If the device ID match all device memory erased
@@ -288,14 +289,14 @@ void ICP_Programming_Algorithm(void) // The main protocol function.
         ICP_exitcode();
         delay_1us(500);
         ICP_RST_HGH;
-		// Read device ID one more time
+        // Read device ID one more time
         if( ( (Target_DevID!=MCU_DEVICE_ID) || (Target_RevID!=0x4B) ) && (TargetID_ReadTry == 0) ) {TargetID_ReadTry = 1;delay_1us(50000); goto ICP_Read_Device_ID;}
         ICSPFlags.bits.FlashMem_CLR = 1;
     }    
     delay_1us(1000000);    
     if(ICSPFlags.bits.FlashMem_CLR)
     {
-		// Reading ID, UID etc. words memory area you may can investigate this area for more details...
+	// Reading ID, UID etc. words memory area you may can investigate this area for more details...
         delay_1us(1000);
         ICP_RST_LOW;
         delay_1us(1500);
@@ -518,7 +519,7 @@ void ICP_Programming_Algorithm(void) // The main protocol function.
     ICSPProgram_End:
     asm("nop");
 	
-	if(ICSPFlags.bits.FlashVerify_OK && ICSPFlags.bits.ConfigVerify_OK) // well done you have successfully programed the chip!!!
+    if(ICSPFlags.bits.FlashVerify_OK && ICSPFlags.bits.ConfigVerify_OK) // well done you have successfully programed the chip!!!
 	
     ICP_RST_LOW;
     ICSP_RELAY = 0; // releasing programming relay
